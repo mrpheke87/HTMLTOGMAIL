@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTACT FORM</title>
+</head>
+
+<style>
+  *{
+    margin: 0 0;
+    padding: 0 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.container{
+    width: 80%;
+    margin: 0 auto;
+    padding: 1%;
+}
+.text-center{
+    text-align: center;
+}
+.clearfix{
+    clear: both;
+    float: none;
+}
+.contact{
+    background-color: #ececec;
+    padding: 4% 0;
+}
+.contact-form{
+    width: 43%;
+    margin: 1%;
+    padding: 2%;
+    float: left;
+    background-color: white;
+    border-radius: 15px;
+}
+.footer{
+  text-align: center;
+}
+input[type=text], select, textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+input[type=submit]{
+    background-color: blue;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+input[type=submit]:hover{
+    background-color: rgb(61, 61, 112);
+}
+  @media only screen and (max-width:768px){
+    .contact{
+        padding: 20% 0;
+    }
+    .contact-form{
+        width: 90%;
+        padding: 5%;
+        margin-bottom: 5%;
+    }
+    iframe{
+        width: 100%;
+    }
+}
+    
+</style>
+<script>
+  function blank() {
+    //if (document.getElementById('name').value == "") {
+    //alert ('Please enter your name!');
+    // return false;
+    // }
+    alert ('Thank you. Your message successfully sent!');
+    return true;
+  }
+</script>
+<body data-rsssl=1>
+    <section class="contact">
+        <div class="container">
+            <h2 class="text-center">CONTACT FORM</h2>
+
+            <div class="contact-form">
+                <form class="gform pure-form pure-form-stacked" method="POST" data-email="YOUR EMAIL HERE" action="YOUR VAR URL HERE" onsubmit="return blank()">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name...."required>
+
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" placeholder="Your email...."required>
+
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone" placeholder="Your phone...."required>
+
+                    <label for="message">Message</label>
+                    <textarea type="text" id="message" name="message" placeholder="Your message..."required>
+                    </textarea>
+
+                    <div class="button">
+                    <input type="submit" value="Send Message">
+                    </div>
+                </form>
+            </div>
+
+            <div class="contact-form">
+               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.4421817530506!2d116.4519843147542!3d-1.5048895989025162!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2df102cdfd2a8931%3A0x1dbc4b96133380b!2sSDN%20001%20Babulu%20Darat!5e0!3m2!1sid!2sid!4v1638615520631!5m2!1sid!2sid" width="450" height="375" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="footer">
+
+        <p>Source Code by <a href="https://youtu.be/DnGItnjx7YI" target="_blank">Mr. Apiwat Wongkanha</a><br>
+        Modified by<a href="https://www.youtube.com/channel/UCqYS1K6NeLAHW7_95keEtUg"> JNC Edukasi</p>
+      </div>
+    </section>
+  <script data-cfasync="false" type="text/javascript">
+    
+   (function() {
+  function validEmail(email) {
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(email);
+  }
+
+  function validateHuman(honeypot) {
+    if (honeypot) {
+      console.log("Robot Detected!");
+      return true;
+    } else {
+      console.log("Welcome Human!");
+    }
+  }
+  function getFormData(form) {
+    var elements = form.elements;
+
+    var fields = Object.keys(elements).filter(function(k) {
+          return (elements[k].name !== "honeypot");
+    }).map(function(k) {
+      if(elements[k].name !== undefined) {
+        return elements[k].name;
+      }else if(elements[k].length > 0){
+        return elements[k].item(0).name;
+      }
+    }).filter(function(item, pos, self) {
+      return self.indexOf(item) == pos && item;
+    });
+
+    var formData = {};
+    fields.forEach(function(name){
+      var element = elements[name];
+      formData[name] = element.value;
+      if (element.length) {
+        var data = [];
+        for (var i = 0; i < element.length; i++) {
+          var item = element.item(i);
+          if (item.checked || item.selected) {
+            data.push(item.value);
+          }
+        }
+        formData[name] = data.join(', ');
+      }
+    });
+
+    // add form-specific values into the data
+    formData.formDataNameOrder = JSON.stringify(fields);
+    formData.formGoogleSheetName = form.dataset.sheet || "message"; // default sheet name
+    formData.formGoogleSendEmail = form.dataset.email || ""; // no email by default
+
+    console.log(formData);
+    return formData;
+  }
+
+  function handleFormSubmit(event) {  
+    event.preventDefault();           
+    var form = event.target;
+    var data = getFormData(form);         
+    if( data.email && !validEmail(data.email) ) {   
+      var invalidEmail = form.querySelector(".email-invalid");
+      if (invalidEmail) {
+        invalidEmail.style.display = "block";
+        return false;
+      }
+    } else {
+      disableAllButtons(form);
+      var url = form.action;
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function() {
+          console.log(xhr.status, xhr.statusText);
+          console.log(xhr.responseText);
+          var formElements = form.querySelector(".form-elements")
+          if (formElements) {
+            formElements.style.display = "none"; // hide form
+          }
+
+          return;
+      };
+      var encoded = Object.keys(data).map(function(k) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+      }).join('&');
+      xhr.send(encoded);
+    }
+  }
+  
+  function loaded() {
+    var forms = document.querySelectorAll("form.gform");
+    for (var i = 0; i < forms.length; i++) {
+      forms[i].addEventListener("submit", handleFormSubmit, false);
+    }
+  };
+  document.addEventListener("DOMContentLoaded", loaded, false);
+
+  function disableAllButtons(form) {
+    var buttons = form.querySelectorAll("button");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].disabled = true;
+    }
+  }
+})();
+
+  </script>
+</body>
+</html>
